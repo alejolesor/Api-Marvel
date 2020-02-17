@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/Api-Marvel/internal/models"
 	"github.com/Api-Marvel/internal/services"
 	"github.com/gin-gonic/gin"
 )
@@ -17,4 +18,15 @@ func GetIndex(c *gin.Context) {
 func GetComics(c *gin.Context) {
 	DataComics := services.GetAllComics()
 	c.JSON(http.StatusOK, DataComics)
+}
+
+//CreateComic ...
+func CreateComic(c *gin.Context) {
+	var comic models.ResultsComics
+	c.BindJSON(&comic)
+	result := services.CreateComic(&comic)
+	if result != 1 {
+		c.JSON(http.StatusInternalServerError, comic)
+	}
+	c.JSON(http.StatusOK, comic)
 }

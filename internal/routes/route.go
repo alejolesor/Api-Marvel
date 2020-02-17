@@ -12,6 +12,7 @@ func SetupRouter() *gin.Engine {
 	{
 		v1.GET("index", controllers.GetIndex)
 		v1.GET("getcomics", controllers.GetComics)
+		v1.POST("createcomic", controllers.CreateComic)
 	}
 	return router
 }

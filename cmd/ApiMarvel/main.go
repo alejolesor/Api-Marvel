@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	session := server.GetSession()
+	session := server.ConnectedDB()
 	fmt.Println("conexion a db   "+"// ", session)
 	router := routes.SetupRouter()
 	router.Run()

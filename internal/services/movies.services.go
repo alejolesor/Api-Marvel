@@ -1,11 +1,14 @@
 package services
 
 import (
+	"context"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 
+	"github.com/Api-Marvel/api/server"
 	"github.com/Api-Marvel/internal/environments"
 	"github.com/Api-Marvel/internal/models"
 )
@@ -47,4 +50,16 @@ func GetAllComics() models.ResponseGeneral {
 		log.Fatal(errmars)
 	}
 	return responsgeneral
+}
+
+//CreateComic ...
+func CreateComic(comic *models.ResultsComics) int {
+	collection := server.ConnectedDB()
+	results, err := collection.InsertOne(context.TODO(), comic)
+	if err != nil {
+		server.GetError(err)
+		return 2
+	}
+	fmt.Println(results)
+	return 1
 }
