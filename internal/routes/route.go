@@ -13,6 +13,7 @@ func SetupRouter() *gin.Engine {
 		v1.GET("index", controllers.GetIndex)
 		v1.GET("getcomics", controllers.GetComics)
 		v1.POST("createcomic", controllers.CreateComic)
+		v1.GET("getcomicsdb", controllers.GetComicsdb)
 	}
 	return router
 }

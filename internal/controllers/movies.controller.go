@@ -30,3 +30,11 @@ func CreateComic(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, comic)
 }
+
+//GetComicsdb ...
+func GetComicsdb(c *gin.Context) {
+
+	comicsdb := services.GetComicdb()
+
+	c.JSON(http.StatusOK, comicsdb)
+}

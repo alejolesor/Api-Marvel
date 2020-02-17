@@ -11,6 +11,7 @@ import (
 	"github.com/Api-Marvel/api/server"
 	"github.com/Api-Marvel/internal/environments"
 	"github.com/Api-Marvel/internal/models"
+	"gopkg.in/mgo.v2/bson"
 )
 
 //GetIndexString ...
@@ -62,4 +63,26 @@ func CreateComic(comic *models.ResultsComics) int {
 	}
 	fmt.Println(results)
 	return 1
+}
+
+//GetComicdb ...
+func GetComicdb() []models.ResultsComics {
+	var comics []models.ResultsComics
+	collection := server.ConnectedDB()
+	result, err := collection.Find(context.TODO(), bson.M{})
+	if err != nil {
+		server.GetError(err)
+	}
+	defer result.Close(context.TODO())
+	for result.Next(context.TODO()) {
+		var comic models.ResultsComics
+		err := result.Decode(&comic)
+		if err != nil {
+			log.Fatal(err)
+		}
+		comics = append(comics, comic)
+	}
+
+	return comics
+
 }
