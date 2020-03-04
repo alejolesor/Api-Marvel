@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/Api-Marvel/internal/models"
@@ -37,4 +38,13 @@ func GetComicsdb(c *gin.Context) {
 	comicsdb := services.GetComicdb()
 
 	c.JSON(http.StatusOK, comicsdb)
+}
+
+//GetUsers ...
+func GetUsers(c *gin.Context) {
+	A, err := services.GetUsersAll()
+	if err != nil {
+		log.Fatal(err)
+	}
+	c.JSON(http.StatusOK, A)
 }

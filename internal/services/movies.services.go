@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -85,4 +86,35 @@ func GetComicdb() []models.ResultsComics {
 
 	return comics
 
+}
+
+var db *sql.DB
+
+//Db ...
+func Db(DB *sql.DB) {
+	db = DB
+}
+
+//GetUsersAll ...
+func GetUsersAll() ([]models.Users, error) {
+	users, err := db.Query("call find_users()")
+	if err != nil {
+		return nil, err
+	}
+	usersModel := []models.Users{}
+	for users.Next() {
+		var id int
+		var nombre string
+		var apellido string
+		var correo string
+		var estado int
+		var contrasena string
+		err2 := users.Scan(&id, &nombre, &apellido, &correo, &estado, &contrasena)
+		if err2 != nil {
+			return nil, err2
+		}
+		user := models.Users{Userid: id, Nombre: nombre, Apellido: apellido, Correo: correo, Estado: estado, Contrasena: contrasena}
+		usersModel = append(usersModel, user)
+	}
+	return usersModel, nil
 }

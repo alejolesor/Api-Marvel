@@ -14,6 +14,7 @@ func SetupRouter() *gin.Engine {
 		v1.GET("getcomics", controllers.GetComics)
 		v1.POST("createcomic", controllers.CreateComic)
 		v1.GET("getcomicsdb", controllers.GetComicsdb)
+		v1.GET("GetUsers", controllers.GetUsers)
 	}
 	return router
 }
